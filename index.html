@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafeRoute - Find Your Exit</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- <script src="script.js" defer></script> -->
 </head>
 <body>
 
@@ -20,7 +19,18 @@
         <p>Or enter your address manually:</p>
         <input type="text" id="address-input" placeholder="Enter address or building name">
         <button id="search-building">Search</button>
+
+        <!-- Display results here -->
+        <p id="building-result" style="font-weight: bold; color: #007BFF;"></p>
+        <p id="manual-building-result" style="font-weight: bold; color: #28a745;"></p>
+        <p id="error-message" style="color: red;"></p>
+
+        <!-- Section for emergency alerts -->
+        <h2>Real-Time Emergency Alerts</h2>
+        <button id="fetch-alerts">Fetch Alerts</button>
+        <ul id="alerts-list"></ul>
     </main>
 
+    <script src="frontendscripts.js"></script>
 </body>
 </html>

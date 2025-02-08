@@ -10,60 +10,68 @@ const WebSocket = require('ws');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Ensure MONGODB_URI is available
+// Ensure MONGODB_URI is available
 if (!process.env.MONGODB_URI) {
     console.error("❌ MONGODB_URI is missing from the .env file");
-    process.exit(1); // Stop the server if MongoDB connection is missing
+    process.exit(1);
 }
 
-// ✅ Connect to MongoDB
+// Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('✅ Connected to MongoDB'))
     .catch(err => {
         console.error('❌ MongoDB connection error:', err);
-        process.exit(1); // Stop the server if MongoDB fails to connect
+        process.exit(1);
     });
 
-app.use(cors());
+app.use(cors({ origin: "*" })); // Allow all origins
 app.use(express.json());
 
-// 🔹 Define Schema and Model for storing buildings
+// Define Schema and Model for storing buildings
 const buildingSchema = new mongoose.Schema({
     name: String,
     latitude: Number,
     longitude: Number,
     detectedAt: { type: Date, default: Date.now }
 });
-
 const Building = mongoose.model('Building', buildingSchema);
 
-// 📍 Detect Building from GPS Coordinates (Improved)
+// --- Detect Building from GPS Coordinates ---
 app.post('/detect-building', async (req, res) => {
+    console.log("Received detect-building request:", req.body);
     const { latitude, longitude } = req.body;
 
     if (!latitude || !longitude) {
+        console.error("Missing latitude or longitude in request.");
         return res.status(400).json({ error: "Latitude & longitude required" });
     }
 
     try {
         const response = await axios.get(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
-        const fullName = response.data.display_name || "Unknown Location";
+        console.log("Response from OpenStreetMap:", response.data);
 
-        // Extract only the first part (building name or landmark)
-        const buildingName = fullName.split(",")[0];
+        // Extract relevant address details
+        const fullAddress = response.data.display_name || "Unknown Location";
+        const addressParts = response.data.address || {};
+        const buildingName = addressParts.building ||
+                             addressParts.attraction ||
+                             addressParts.amenity ||
+                             addressParts.shop ||
+                             addressParts.house_number ||
+                             fullAddress;
 
-        // ✅ Save detected building to MongoDB
+        // Optionally, you can save this detected building in MongoDB
         const newBuilding = new Building({ name: buildingName, latitude, longitude });
         await newBuilding.save();
 
-        res.json({ building: buildingName });
+        res.json({ building: buildingName, full_address: fullAddress });
     } catch (error) {
         console.error("Error detecting building:", error);
         res.status(500).json({ error: "Failed to detect building" });
     }
 });
 
-// 📍 Recognize Building from Manual Entry
+// --- Recognize Building from Manual Entry ---
 app.post('/recognize-building', async (req, res) => {
     const { buildingName } = req.body;
 
@@ -80,7 +88,7 @@ app.post('/recognize-building', async (req, res) => {
 
         const { display_name, lat, lon } = response.data[0];
 
-        // ✅ Save recognized building to MongoDB
+        // Save recognized building to MongoDB
         const newBuilding = new Building({ name: display_name, latitude: lat, longitude: lon });
         await newBuilding.save();
 
@@ -91,14 +99,13 @@ app.post('/recognize-building', async (req, res) => {
     }
 });
 
-// 📍 Fetch Real-Time Emergency Alerts (Filtered by State)
+// --- Fetch Real-Time Emergency Alerts (Filtered by State) ---
 app.get('/emergency-alerts', async (req, res) => {
     const { state } = req.query; // Example: ?state=NY
     try {
         const response = await fetch('https://www.fema.gov/api/open/v2/DisasterDeclarationsSummaries');
         const data = await response.json();
 
-        // Filter alerts based on the requested state
         const filteredAlerts = state 
             ? data.DisasterDeclarationsSummaries.filter(alert => alert.state === state.toUpperCase())
             : data.DisasterDeclarationsSummaries;
@@ -110,7 +117,7 @@ app.get('/emergency-alerts', async (req, res) => {
     }
 });
 
-// 📍 Retrieve All Stored Buildings from MongoDB
+// --- Retrieve All Stored Buildings from MongoDB ---
 app.get('/stored-buildings', async (req, res) => {
     try {
         const buildings = await Building.find();
@@ -121,7 +128,7 @@ app.get('/stored-buildings', async (req, res) => {
     }
 });
 
-// 📍 Serve a Single Floor Plan (floorplan.geojson)
+// --- Serve a Single Floor Plan (floorplan.geojson) ---
 app.get('/floor-plan', async (req, res) => {
     try {
         const filePath = path.join(__dirname, 'maps', 'floorplan.geojson');
@@ -131,7 +138,7 @@ app.get('/floor-plan', async (req, res) => {
     }
 });
 
-// 🔹 WebSocket Server Setup for Real-Time Updates
+// --- WebSocket Server Setup for Real-Time Updates ---
 const server = app.listen(PORT, () => {
     console.log(`✅ SafeRoute Backend Running on http://localhost:${PORT}`);
 });
