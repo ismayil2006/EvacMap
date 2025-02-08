@@ -1,0 +1,24 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [0, 0],
+                        [10, 0],
+                        [10, 10],
+                        [0, 10],
+                        [0, 0]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Main Floor",
+                "description": "This is a sample floor plan representing a square layout."
+            }
+        }
+    ]
+}
