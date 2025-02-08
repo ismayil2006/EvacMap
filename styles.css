@@ -1,18 +1,42 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
 }
 
-header {
-    background-color: #007bff;
+.header-image {
+    width: 50%;
+    max-height: 300px;
+    object-fit: contain;
+}
+
+.container {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #007BFF;
     color: white;
-    padding: 15px;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
 }
 
-#map {
+button:hover {
+    background-color: #0056b3;
+}
+
+input {
+    padding: 10px;
+    font-size: 16px;
     width: 80%;
-    height: 500px;
-    margin: 20px auto;
+    max-width: 400px;
+    margin: 10px 0;
     border: 1px solid #ccc;
+    border-radius: 5px;
 }

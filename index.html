@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeRoute - Emergency Evacuation</title>
+    <title>SafeRoute - Find Your Exit</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- <script src="script.js" defer></script> -->
 </head>
 <body>
-    <header>
-        <h1>SafeRoute</h1>
-        <p>Accessible Emergency Evacuation Routes for Large Buildings</p>
-    </header>
-    
-    <section id="map">
-        <p>Loading indoor map...</p>
-    </section>
 
-    <script src="script.js"></script>
+    <header>
+        <img src="Images/EvacMapLogo.png" alt="EvacMap Header" class="header-image">
+    </header>
+
+    <main class="container">
+        <h1>Find an Accessible Evacuation Route</h1>
+        <button id="detect-location">Detect My Building</button>
+
+        <p>Or enter your address manually:</p>
+        <input type="text" id="address-input" placeholder="Enter address or building name">
+        <button id="search-building">Search</button>
+    </main>
+
 </body>
 </html>
