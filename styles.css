@@ -67,6 +67,55 @@ button:hover {
     transform: translateX(-60%); /* Title image slides left */
 }
 
+/* Dropdowns styling - Position under title image and to the left */
+#dropdowns-container {
+    position: absolute;
+    top: 25%; /* Moves it higher on the page */
+    left: 10%; /* Aligns it to the left under the title */
+    opacity: 0; /* Initially hidden */
+    transform: translateX(-50px); /* Start slightly off-screen */
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align dropdowns to the left */
+}
+
+/* Show dropdowns after transition */
+#dropdowns-container.show-dropdowns {
+    opacity: 1;
+    transform: translateY(0); /* Move up to original position */
+}
+
+/* Dropdown styling */
+select {
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#continue-button {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    opacity: 0;
+    transform: translateY(10px);
+    display: block;
+}
+
+#continue-button.show-button {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 input {
     padding: 10px;
     font-size: 16px;

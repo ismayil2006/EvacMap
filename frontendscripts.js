@@ -27,5 +27,24 @@ function triggerAnimation() {
 
     // Show image container
     document.getElementById("image-container").classList.add("show-image");
+
+    // Show the dropdowns after the initial elements fade out
+    setTimeout(() => {
+        document.getElementById("dropdowns-container").classList.add("show-dropdowns");
+    }, 600); // 600ms to match the timing of the initial animation   
 }
 
+document.getElementById("dropdown-disability").addEventListener("change", checkDropdowns);
+document.getElementById("dropdown-emergencytype").addEventListener("change", checkDropdowns);
+
+function checkDropdowns() {
+    const dropdown1 = document.getElementById("dropdown-disability").value;
+    const dropdown2 = document.getElementById("dropdown-emergencytype").value;
+    const continueButton = document.getElementById("continue-button");
+
+    if (dropdown1 && dropdown2) {
+        continueButton.classList.add("show-button"); // Show button
+    } else {
+        continueButton.classList.remove("show-button"); // Hide button if not both selected
+    }
+}
