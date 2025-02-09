@@ -1,0 +1,44 @@
+{
+    "nodes": [
+      { "id": "start", "x": 0, "y": 0 },
+      { "id": "A", "x": 10, "y": 0 },
+      { "id": "B", "x": 20, "y": 0 },
+      { "id": "C", "x": 30, "y": 0 },
+      { "id": "D", "x": 40, "y": 0 },
+      { "id": "E", "x": 50, "y": 0 },
+      { "id": "F", "x": 60, "y": 0 },
+      { "id": "G", "x": 70, "y": 0 },
+      { "id": "lobby", "x": 10, "y": 10 },
+      { "id": "corridor1", "x": 20, "y": 10 },
+      { "id": "corridor2", "x": 40, "y": 10 },
+      { "id": "room1", "x": 20, "y": 20 },
+      { "id": "conference", "x": 40, "y": 20 },
+      { "id": "stairs1", "x": 60, "y": 10 },
+      { "id": "elevator1", "x": 70, "y": 10 },
+      { "id": "room2", "x": 70, "y": 20 },
+      { "id": "corridor3", "x": 50, "y": 20 },
+      { "id": "room3", "x": 30, "y": 20 },
+      { "id": "exit", "x": 80, "y": 20 }
+    ],
+    "edges": [
+      { "from": "start", "to": "A", "distance": 10, "features": [] },
+      { "from": "A", "to": "B", "distance": 10, "features": [] },
+      { "from": "B", "to": "C", "distance": 10, "features": [] },
+      { "from": "C", "to": "D", "distance": 10, "features": [] },
+      { "from": "D", "to": "E", "distance": 10, "features": [] },
+      { "from": "E", "to": "F", "distance": 10, "features": [] },
+      { "from": "F", "to": "G", "distance": 10, "features": [] },
+      { "from": "A", "to": "lobby", "distance": 10, "features": [] },
+      { "from": "B", "to": "corridor1", "distance": 10, "features": [] },
+      { "from": "corridor1", "to": "corridor2", "distance": 20, "features": [] },
+      { "from": "lobby", "to": "room1", "distance": 15, "features": [] },
+      { "from": "corridor1", "to": "room3", "distance": 15, "features": [] },
+      { "from": "corridor2", "to": "conference", "distance": 15, "features": [] },
+      { "from": "corridor2", "to": "stairs1", "distance": 15, "features": ["stairs"] },
+      { "from": "corridor2", "to": "elevator1", "distance": 15, "features": ["elevator"] },
+      { "from": "elevator1", "to": "room2", "distance": 10, "features": [] },
+      { "from": "conference", "to": "corridor3", "distance": 10, "features": [] },
+      { "from": "corridor3", "to": "exit", "distance": 20, "features": [] }
+    ]
+  }
+  

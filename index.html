@@ -3,19 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafeRoute - Find Your Exit</title>
+  <title>EvacMap - Find Your Exit</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Include the front-end JavaScript with defer so it loads after the HTML -->
   <script src="frontendscripts.js" defer></script>
+  <!-- Three.js and OrbitControls for 3D visualization -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
 </head>
 <body>
   <header>
     <img src="Images/EvacMapLogo.png" alt="EvacMap Header" class="header-image">
   </header>
-
   <main class="container">
     <h1 id="title">Find an Accessible Evacuation Route</h1>
-
+    
     <!-- Two-column layout for building detection/search and alerts -->
     <div class="columns-wrapper">
       <!-- Left column: Building detection/search controls -->
@@ -27,28 +29,26 @@
           <button id="search-building">Search</button>
         </div>
       </div>
-
-      <!-- Right column: Emergency alerts button and alerts list -->
+      <!-- Right column: Emergency alerts -->
       <div class="column right-column">
         <button id="fetch-alerts">Fetch Alerts</button>
-        <!-- This UL will be populated with alert items -->
         <ul id="alerts-list"></ul>
       </div>
     </div>
-
-    <!-- Result container: Displays building result and error messages, plus a continue button -->
+    
+    <!-- Result container for building detection -->
     <div id="result-container">
       <p id="building-result"></p>
       <p id="error-message"></p>
-      <button id="continue-button" class="hidden">Continue</button>
+      <button id="continue-button-1" class="hidden">Continue</button>
     </div>
-
+    
     <!-- Optional image container -->
     <div id="image-container">
       <img id="building-image" src="building-placeholder.jpg" alt="Building">
     </div>
-
-    <!-- Dropdowns for later options (if needed) -->
+    
+    <!-- Dropdowns and evacuation controls -->
     <div id="dropdowns-container">
       <select id="dropdown-disability">
         <option value="" disabled selected>Select an Accessibility Option</option>
@@ -62,7 +62,17 @@
         <option value="Power outage">Power Outage</option>
         <option value="Earthquake">Earthquake</option>
       </select>
+      <!-- New evacuation controls -->
+      <div id="evacuation-controls" style="display: none;">
+        <input type="text" id="floor-input" placeholder="Enter your floor">
+        <button id="get-evacuation">Get Evacuation Instructions</button>
+        <p id="evacuation-result"></p>
+      </div>
+      <button id="continue-button-2" class="hidden">Continue</button>
     </div>
+    
+    <!-- 3D Visualization container (do not modify) -->
+    <div id="three-container"></div>
   </main>
 </body>
 </html>
