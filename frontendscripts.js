@@ -108,6 +108,9 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("search-building").classList.add("hidden-left");
       document.getElementById("address-input").classList.add("hidden-left");
       document.getElementById("fetch-alerts").classList.add("hidden-right");
+      document.getElementById("alerts-list").classList.add("hidden-right");
+      // hide line
+      document.querySelector(".columns-wrapper").classList.add("hide-line");
       
       //document.getElementById("continue-button-1").classList.add("show-button"); //remove later
       // Show the image container

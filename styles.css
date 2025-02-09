@@ -35,6 +35,10 @@ body {
     width: 1px;
     background-color: #ccc;
   }
+
+  .hide-line::after {
+    display: none;
+  }
   
   /* Align text in columns */
   .left-column {
