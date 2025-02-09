@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const buildingResultElement = document.getElementById("building-result");
       const continueButton = document.getElementById("continue-button");
       buildingResultElement.innerText = result;
-      // Remove the "hidden" class (using display: none in CSS) to show the continue button
       continueButton.classList.remove("hidden");
     }
   
@@ -100,23 +99,19 @@ document.addEventListener("DOMContentLoaded", () => {
     function triggerAnimation() {
       // Slide the header image to the left
       document.querySelector(".header-image").classList.add("slide-left");
-  
-      // Add the "hidden-left" or "hidden-right" classes to fade out controls
+      // Fade out or move other elements
       document.getElementById("title").classList.add("hidden-left");
       document.getElementById("paragraph").classList.add("hidden-left");
       document.getElementById("detect-location").classList.add("hidden-left");
       document.getElementById("search-building").classList.add("hidden-left");
       document.getElementById("address-input").classList.add("hidden-left");
       document.getElementById("fetch-alerts").classList.add("hidden-right");
-  
       // Show the image container
       document.getElementById("image-container").classList.add("show-image");
-  
-      // Optionally, after a delay, you could reveal additional options
+      // Optionally, reveal additional options after a delay
       setTimeout(() => {
         document.getElementById("dropdowns-container").classList.add("show-dropdowns");
       }, 600);
-    
     }
   
     // Dropdown functionality (if needed later)

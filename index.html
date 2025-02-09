@@ -16,7 +16,7 @@
   <main class="container">
     <h1 id="title">Find an Accessible Evacuation Route</h1>
 
-    <!-- Two-column layout for building detection and alerts -->
+    <!-- Two-column layout for building detection/search and alerts -->
     <div class="columns-wrapper">
       <!-- Left column: Building detection/search controls -->
       <div class="column left-column">
@@ -28,24 +28,27 @@
         </div>
       </div>
 
-      <!-- Right column: Emergency alerts button -->
+      <!-- Right column: Emergency alerts button and alerts list -->
       <div class="column right-column">
         <button id="fetch-alerts">Fetch Alerts</button>
+        <!-- This UL will be populated with alert items -->
+        <ul id="alerts-list"></ul>
       </div>
     </div>
 
-    <!-- New result container for building output and continue button -->
+    <!-- Result container: Displays building result and error messages, plus a continue button -->
     <div id="result-container">
       <p id="building-result"></p>
+      <p id="error-message"></p>
       <button id="continue-button" class="hidden">Continue</button>
     </div>
 
-    <!-- Optional: An image container (if needed) -->
+    <!-- Optional image container -->
     <div id="image-container">
       <img id="building-image" src="building-placeholder.jpg" alt="Building">
     </div>
 
-    <!-- (Optional) Dropdowns for later options -->
+    <!-- Dropdowns for later options (if needed) -->
     <div id="dropdowns-container">
       <select id="dropdown-disability">
         <option value="" disabled selected>Select an Accessibility Option</option>
