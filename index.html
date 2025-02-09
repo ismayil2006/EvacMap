@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SafeRoute - Find Your Exit</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Use the script tag with defer from the feature-ui branch -->
+  <!-- Include the front-end JavaScript with defer so it loads after the HTML -->
   <script src="frontendscripts.js" defer></script>
 </head>
 <body>
@@ -16,9 +16,9 @@
   <main class="container">
     <h1 id="title">Find an Accessible Evacuation Route</h1>
 
-    <!-- Columns layout from the feature-ui branch -->
+    <!-- Two-column layout for building detection and alerts -->
     <div class="columns-wrapper">
-      <!-- Left column: Controls for detecting/searching a building -->
+      <!-- Left column: Building detection/search controls -->
       <div class="column left-column">
         <button id="detect-location">Detect My Building</button>
         <p id="paragraph">Or enter your address manually:</p>
@@ -28,18 +28,24 @@
         </div>
       </div>
 
-      <!-- Right column: Emergency Alerts -->
+      <!-- Right column: Emergency alerts button -->
       <div class="column right-column">
         <button id="fetch-alerts">Fetch Alerts</button>
       </div>
     </div>
 
-    <!-- Optional: A placeholder for an image if needed -->
+    <!-- New result container for building output and continue button -->
+    <div id="result-container">
+      <p id="building-result"></p>
+      <button id="continue-button" class="hidden">Continue</button>
+    </div>
+
+    <!-- Optional: An image container (if needed) -->
     <div id="image-container">
       <img id="building-image" src="building-placeholder.jpg" alt="Building">
     </div>
 
-    <!-- Dropdowns for additional options -->
+    <!-- (Optional) Dropdowns for later options -->
     <div id="dropdowns-container">
       <select id="dropdown-disability">
         <option value="" disabled selected>Select an Accessibility Option</option>
@@ -53,8 +59,6 @@
         <option value="Power outage">Power Outage</option>
         <option value="Earthquake">Earthquake</option>
       </select>
-      <!-- Continue button -->
-      <button id="continue-button">Continue</button>
     </div>
   </main>
 </body>

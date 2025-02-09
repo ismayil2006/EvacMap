@@ -5,70 +5,66 @@ body {
     padding: 0;
     background-color: #ffffff;
     overflow: hidden;
-}
-
-/* Two-column container */
-.columns-wrapper {
+  }
+  
+  /* Two-column container */
+  .columns-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    max-width: 800px; /* Adjust width */
+    max-width: 800px;
     margin: 20px auto;
     position: relative;
-}
-
-/* Left and right column styling */
-.column {
+  }
+  
+  /* Left and right column styling */
+  .column {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    width: 45%; /* Set column width */
-}
-
-/* Add a thin vertical line between the columns */
-.columns-wrapper::after {
+    width: 45%;
+  }
+  
+  /* Add a vertical line between the columns */
+  .columns-wrapper::after {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 50%; /* Position it exactly in the middle */
-    width: 1px; /* Make it thin */
-    background-color: #ccc; /* Change this to your preferred color */
-}
-
-/* Left-align text and buttons in the left column */
-.left-column {
+    left: 50%;
+    width: 1px;
+    background-color: #ccc;
+  }
+  
+  /* Align text in columns */
+  .left-column {
     text-align: left;
-}
-
-/* Right-align content in the right column */
-.right-column {
+  }
+  .right-column {
     text-align: right;
-}
-
-/* Search bar and button inline */
-.search-container {
+  }
+  
+  /* Inline search container */
+  .search-container {
     display: flex;
     gap: 10px;
-}
-
-/* Style for the left and right column buttons */
-#fetch-alerts {
-    align-self: flex-end; /* Align fetch alerts to the right */
-}
-
-.header-image {
+  }
+  
+  /* Header image styling */
+  .header-image {
     width: 50%;
     max-height: 300px;
     object-fit: contain;
     transition: transform 0.6s ease-in-out;
-}
-
-h1 {
+  }
+  
+  /* Title styling */
+  h1 {
     transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-}
-
-button {
+  }
+  
+  /* Button styling */
+  button {
     background-color: #007BFF;
     color: white;
     border: none;
@@ -78,47 +74,59 @@ button {
     margin: 10px;
     border-radius: 5px;
     transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #0056b3;
-}
-
-#image-container {
+  }
+  
+  /* Input styling */
+  input {
+    padding: 10px;
+    font-size: 16px;
+    width: 80%;
+    max-width: 400px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Image container styling */
+  #image-container {
     position: absolute;
     top: 50%;
-    right: -100%; /* Start off-screen */
+    right: -100%;
     transform: translateY(-50%);
     transition: right 0.6s ease-in-out;
-}
-
-#building-image {
+  }
+  
+  #building-image {
     width: 300px;
     height: auto;
     border-radius: 10px;
-}
-
-/* Animation class */
-.hidden-left {
+  }
+  
+  /* Animations for elements sliding in/out */
+  .hidden-left {
     opacity: 0;
     transform: translateX(-500px);
-}
-
-.hidden-right {
+  }
+  
+  .hidden-right {
     opacity: 0;
     transform: translateX(500px);
-}
-
-.show-image {
+  }
+  
+  .show-image {
     right: 10%;
-}
-
-.slide-left {
+  }
+  
+  .slide-left {
     transform: translateX(-60%);
-}
-
-/* Dropdowns styling - Position under title image and to the left */
-#dropdowns-container {
+  }
+  
+  /* Dropdown container styling */
+  #dropdowns-container {
     position: absolute;
     top: 40%;
     left: 10%;
@@ -128,24 +136,35 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-}
-
-#dropdowns-container.show-dropdowns {
+  }
+  
+  #dropdowns-container.show-dropdowns {
     opacity: 1;
     transform: translateY(0);
-}
-
-/* Dropdown styling */
-select {
+  }
+  
+  select {
     padding: 10px;
     font-size: 16px;
     width: 250px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-#continue-button {
+  }
+  
+  /* New result container styling */
+  #result-container {
+    margin-top: 20px;
+  }
+  
+  #building-result {
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 10px;
+  }
+  
+  /* Continue button styling */
+  #continue-button {
     background-color: #0056b3;
     color: white;
     border: none;
@@ -155,22 +174,10 @@ select {
     margin-top: 15px;
     border-radius: 5px;
     transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-    opacity: 0;
-    transform: translateY(10px);
-    display: block;
-}
-
-#continue-button.show-button {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-input {
-    padding: 10px;
-    font-size: 16px;
-    width: 80%;
-    max-width: 400px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    display: none; /* Hidden by default */
+  }
+  
+  #continue-button.show-button {
+    display: inline-block;
+  }
+  
