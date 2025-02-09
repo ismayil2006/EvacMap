@@ -120,7 +120,7 @@ button:hover {
 /* Dropdowns styling - Position under title image and to the left */
 #dropdowns-container {
     position: absolute;
-    top: 25%;
+    top: 40%;
     left: 10%;
     opacity: 0;
     transform: translateX(-50px);
