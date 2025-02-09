@@ -209,7 +209,7 @@ body {
     top: 50%;                /* Center vertically */
     right: 20px;             /* Move 20px from the right edge */
     transform: translateY(-50%);
-    overflow: hidden;     /* Hides anything that exceeds the bounds of the container */
+    overflow: auto;     /* Hides anything that exceeds the bounds of the container */
     border: 2px solid #ccc; /* Optional: border for visibility */
     background-color: white; /* Background for contrast */
     z-index: 9999;

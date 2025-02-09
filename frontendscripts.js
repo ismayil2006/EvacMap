@@ -148,13 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set up scene, camera, and renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xffffff, 1);
     // renderer.domElement.style.position = "fixed"; // Fix it in place
     // renderer.domElement.style.top = "0";
-    // renderer.domElement.style.left = "0";
+    renderer.domElement.style.left = "0";
     // // renderer.domElement.style.zIndex = "-1"; // Send it to the background
     // renderer.domElement.style.pointerEvents = "auto";
     document.getElementById("three-container").appendChild(renderer.domElement);
@@ -182,15 +182,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true });
         const geometry = new THREE.PlaneGeometry(5, 5);
         const plane = new THREE.Mesh(geometry, material);
-        plane.position.set(0, 0, -index * spacing);
-        plane.rotation.z = -Math.PI / 2; // Rotate each plane 90 degrees around the Z-axis
+        plane.position.set(0, -index * spacing, 0);
+        plane.rotation.x = Math.PI / 2;
+        plane.rotation.z = -Math.PI / 2;
         scene.add(plane);
         planes.push(plane);
     });
 
     // Position the camera
-    camera.position.set(0, 0, 6);
-    // camera.rotation.z = Math.PI / 2;
+    camera.position.set(5, 8, 5); // Move the camera up and back
+    camera.rotation.x = Math.PI / 1;  // Tilt the camera downwards at an angle
     controls.target.set(0, 0, -(planes.length * spacing) / 2);
 
     // Handle window resizing
@@ -204,6 +205,9 @@ document.addEventListener("DOMContentLoaded", () => {
     function animate() {
         requestAnimationFrame(animate);
         controls.update();
+
+        console.log(camera.position);
+
         renderer.render(scene, camera);
     }
     animate();
