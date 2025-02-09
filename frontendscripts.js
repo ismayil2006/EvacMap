@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Trigger animations when building detection or search is performed
     document.getElementById("continue-button-1").addEventListener("click", triggerAnimation);
-    // document.getElementById("search-building").addEventListener("click", triggerAnimation);
+    document.getElementById("search-building").addEventListener("click", triggerAnimation);
   
     function triggerAnimation() {
       // Slide the header image to the left
@@ -118,6 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
       // Optionally, reveal additional options after a delay
       setTimeout(() => {
         document.getElementById("dropdowns-container").classList.add("show-dropdowns");
+        
+        const threeContainer = document.getElementById("three-container");
+
+        // Trigger the fade-in animation
+        threeContainer.style.opacity = 1;
+        threeContainer.style.pointerEvents = "auto";
       }, 600);
     }
   
@@ -163,9 +169,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Load images as textures and create planes
     const imagePaths = [
-        'Images/fuqua_layout_slice_0.png', 'Images/fuqua_layout_slice_1.png',
-        'Images/fuqua_layout_slice_2.png', 'Images/fuqua_layout_slice_3.png',
-        'Images/fuqua_layout_slice_4.png', 'Images/fuqua_layout_slice_5.png',
+        'Images/fuqua_layout_slice_5.png', 'Images/fuqua_layout_slice_4.png',
+        'Images/fuqua_layout_slice_3.png', 'Images/fuqua_layout_slice_2.png',
+        'Images/fuqua_layout_slice_1.png', 'Images/fuqua_layout_slice_0.png',
     ];
 
     const planes = [];
@@ -177,13 +183,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const geometry = new THREE.PlaneGeometry(5, 5);
         const plane = new THREE.Mesh(geometry, material);
         plane.position.set(0, 0, -index * spacing);
+        plane.rotation.z = -Math.PI / 2; // Rotate each plane 90 degrees around the Z-axis
         scene.add(plane);
         planes.push(plane);
     });
 
     // Position the camera
-    camera.position.set(0, 0, 2);
-    controls.target.set(4, 4, -(planes.length * spacing) / 2);
+    camera.position.set(0, 0, 6);
+    // camera.rotation.z = Math.PI / 2;
+    controls.target.set(0, 0, -(planes.length * spacing) / 2);
 
     // Handle window resizing
     window.addEventListener("resize", () => {

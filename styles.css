@@ -203,8 +203,8 @@ body {
   }
 
   #three-container {
-    width: 600px;         /* Width of the container */
-    height: 400px;        /* Height of the container */
+    width: 60%;         /* Width of the container */
+    height: 90%;        /* Height of the container */
     position: fixed;         /* Fixed positioning relative to the viewport */
     top: 50%;                /* Center vertically */
     right: 20px;             /* Move 20px from the right edge */
@@ -212,4 +212,8 @@ body {
     overflow: hidden;     /* Hides anything that exceeds the bounds of the container */
     border: 2px solid #ccc; /* Optional: border for visibility */
     background-color: white; /* Background for contrast */
+    z-index: 9999;
+    opacity: 0;             /* Initially make it invisible */
+    pointer-events: none;   /* Disable interaction when invisible */
+    transition: opacity 1s ease-in-out; /* Smooth fade-in effect */
 }
