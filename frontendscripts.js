@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- Continue Button for Navigation ---
     document.getElementById("continue-button-1").addEventListener("click", () => {
       triggerAnimation();
-      // Clear the blue text (user's address)
+      // Clear the building result text
       document.getElementById("building-result").innerText = "";
       // After the animation, reveal the evacuation controls
       setTimeout(() => {
@@ -151,11 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const accessibility = document.getElementById("dropdown-disability").value || "";
       const floor = document.getElementById("floor-input").value.trim() || "1";
     
-      const payload = {
-        emergency,
-        accessibility,
-        floor
-      };
+      const payload = { emergency, accessibility, floor };
     
       try {
         const response = await fetch("http://localhost:5000/evacuation-steps", {
@@ -175,60 +171,131 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     
-    // --- 3D Visualization Setup (using Three.js) ---
-    // (Do not modify the 3D render code)
+    // 3D stuff maybe
+
+    // Set up scene, camera, and renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 500000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xffffff, 1);
-    renderer.domElement.style.left = "0";
+    // renderer.domElement.style.position = "fixed"; // Fix it in place
+    // renderer.domElement.style.top = "0";
+    // renderer.domElement.style.left = "0";
+    // // renderer.domElement.style.zIndex = "-1"; // Send it to the background
+    // renderer.domElement.style.pointerEvents = "auto";
     document.getElementById("three-container").appendChild(renderer.domElement);
-    
+
+    // Add orbit controls for rotation and panning
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = true;
     controls.rotateSpeed = 0.5;
     controls.panSpeed = 0.5;
-    
+
+    // Load images as textures and create planes
     const imagePaths = [
-      'Images/fuqua_layout_slice_5.png',
-      'Images/fuqua_layout_slice_4.png',
-      'Images/fuqua_layout_slice_3.png',
-      'Images/fuqua_layout_slice_2.png',
-      'Images/fuqua_layout_slice_1.png',
-      'Images/fuqua_layout_slice_0.png',
+        'Images/fuqua_layout_slice_5.png', 'Images/fuqua_layout_slice_4.png',
+        'Images/fuqua_layout_slice_3.png', 'Images/fuqua_layout_slice_2.png',
+        'Images/fuqua_layout_slice_1.png', 'Images/fuqua_layout_slice_0.png',
     ];
-    
+
     const planes = [];
-    const spacing = 1;
+    const spacing = 50;
+
     imagePaths.forEach((path, index) => {
-      const texture = new THREE.TextureLoader().load(path);
-      const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true });
-      const geometry = new THREE.PlaneGeometry(5, 5);
-      const plane = new THREE.Mesh(geometry, material);
-      plane.position.set(0, -index * spacing, 0);
-      plane.rotation.x = Math.PI / 2;
-      plane.rotation.z = -Math.PI / 2;
-      scene.add(plane);
-      planes.push(plane);
+        const texture = new THREE.TextureLoader().load(path);
+        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true });
+        const geometry = new THREE.PlaneGeometry(567, 1224);
+        const plane = new THREE.Mesh(geometry, material);
+        plane.position.set(0, -index * spacing, 0);
+        plane.rotation.x = Math.PI / 2;
+        // plane.rotation.z = -Math.PI / 2;
+        scene.add(plane);
+        planes.push(plane);
     });
+
+    // lines
+    function createLine3D(start, end, radius = 10, color = 0xff0000) {
+        const direction = new THREE.Vector3().subVectors(end, start);
+        const length = direction.length();
+        
+        // Create the cylinder geometry (using a small radius)
+        const geometry = new THREE.CylinderGeometry(radius, radius, length, 8);
+        const material = new THREE.MeshBasicMaterial({ color });
+        const cylinder = new THREE.Mesh(geometry, material);
+        
+        // Position the cylinder at the midpoint
+        const midpoint = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+        cylinder.position.copy(midpoint);
+        
+        // Align the cylinder to the direction of the line
+        const axis = new THREE.Vector3(0, 1, 0); // Default up axis
+        cylinder.quaternion.setFromUnitVectors(axis, direction.clone().normalize());
+        
+        return cylinder;
+    }
+
+    function createSphereAtPoint(point, radius = 5, color = 0xff0000) {
+        // Create sphere geometry
+        const geometry = new THREE.SphereGeometry(radius, 8, 8);
+        const material = new THREE.MeshBasicMaterial({ color });
+        const sphere = new THREE.Mesh(geometry, material);
+        
+        // Position the sphere at the given point
+        sphere.position.copy(point);
+        
+        return sphere;
+    }
+
+    const points = [];
+    var point = new THREE.Vector3( -284, 0, -612 );
+    point.add(new THREE.Vector3( 220, (-spacing)*3, 512 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( -15, (-spacing)*0, -40 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( 15, (-spacing)*1, 3 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( 17, (-spacing)*0, -17 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( -120, (-spacing)*0, -120 ));
+    points.push( point.clone() );
+    // points.push( new THREE.Vector3( 0, -1, 0 ) );
+    // points.push( new THREE.Vector3( 0, -2, 1 ) );
+    // points.push( new THREE.Vector3( 1, -2, 3 ) );
+
+    const sphereEnd = createSphereAtPoint(points[0], 5, 0x007BFF); // Adjust radius and color here
+    scene.add(sphereEnd);
+    for (let i = 0; i < points.length - 1; i++) {
+        const line = createLine3D(points[i], points[i + 1], 5, 0x007BFF); // Adjust radius here
+        scene.add(line);
+
+        const sphereEnd = createSphereAtPoint(points[i + 1], 5, 0x007BFF); // Adjust radius and color here
+        scene.add(sphereEnd);
+    }
     
-    camera.position.set(5, 8, 5);
-    camera.rotation.x = Math.PI / 1;
+
+    // Position the camera
+    camera.position.set(1000, 1224, 1000); // Move the camera up and back
+    camera.rotation.x = Math.PI / 1;  // Tilt the camera downwards at an angle
     controls.target.set(0, 0, -(planes.length * spacing) / 2);
-    
+
+    // Handle window resizing
     window.addEventListener("resize", () => {
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
     });
-    
+
+    // Animation loop
     function animate() {
-      requestAnimationFrame(animate);
-      controls.update();
-      renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+        controls.update();
+
+        console.log(camera.position);
+
+        renderer.render(scene, camera);
     }
     animate();
   });
