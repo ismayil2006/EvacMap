@@ -1,19 +1,69 @@
+/* Base styling */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
     padding: 0;
     background-color: #ffffff;
+    overflow: hidden;
 }
 
+/* Header image styling (EvacMap logo) */
 .header-image {
     width: 50%;
     max-height: 300px;
     object-fit: contain;
+    transition: transform 0.6s ease-in-out;
 }
 
-.container {
-    margin-top: 20px;
+/* Two-column container */
+.columns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    max-width: 800px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.columns-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 1px;
+    background-color: #ccc;
+}
+
+.hide-line::after {
+    display: none;
+}
+
+/* Column styling */
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 45%;
+}
+
+.left-column {
+    text-align: left;
+}
+
+.right-column {
+    text-align: right;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+}
+
+/* Title and button styles */
+h1 {
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
 button {
@@ -25,6 +75,7 @@ button {
     cursor: pointer;
     margin: 10px;
     border-radius: 5px;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 
 button:hover {
@@ -34,9 +85,151 @@ button:hover {
 input {
     padding: 10px;
     font-size: 16px;
-    width: 80%;
-    max-width: 400px;
+    /* For most inputs we use auto width with a max-width; specific inputs will be set below */
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+
+/* Image container styling */
+#image-container {
+    position: absolute;
+    top: 50%;
+    right: -100%;
+    transform: translateY(-50%);
+    transition: right 0.6s ease-in-out;
+}
+
+#building-image {
+    width: 300px;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Animations for sliding elements */
+.hidden-left {
+    opacity: 0;
+    transform: translateX(-500px);
+}
+
+.hidden-right {
+    opacity: 0;
+    transform: translateX(500px);
+}
+
+.show-image {
+    right: 10%;
+}
+
+.slide-left {
+    transform: translateX(-60%);
+}
+
+/* Dropdown container styling – moved up and shifted to the left */
+#dropdowns-container {
+    position: absolute;
+    top: 30%;
+    left: 5%;  /* Shifted left from 10% to 5% */
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#dropdowns-container.show-dropdowns {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+select {
+    padding: 10px;
+    font-size: 16px;
+    width: 250px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Result container styling */
+#result-container {
+    margin-top: 20px;
+}
+
+#building-result {
+    font-weight: bold;
+    color: #007BFF;
+    margin-bottom: 10px;
+}
+
+#continue-button-1,
+#continue-button-2 {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    border-radius: 5px;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
+    display: none;
+}
+
+#continue-button-1.show-button,
+#continue-button-2.show-button {
+    display: inline-block;
+}
+
+/* Evacuation controls styling */
+#evacuation-controls {
+    margin: 10px 0;
+    text-align: center;
+    width: 300px;  /* Fixed width for the entire evacuation controls block */
+    margin-left: 0;  /* Align to the left edge of the dropdown container */
+}
+
+/* Updated Floor Input styling for alignment and fixed width */
+#floor-input {
+    width: 300px;       /* Fixed width to match the evacuation controls */
+    margin: 10px 0;
+    display: block;
+    text-align: left;
+}
+
+/* Updated Get Evacuation Button styling to be fixed width */
+#get-evacuation {
+    width: 300px;       /* Fixed width */
+}
+
+/* Updated Evacuation result styling for constant width and scrolling */
+#evacuation-result {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+    max-height: 200px;  /* Maximum height; if exceeded, scroll will appear */
+    overflow-y: auto;   /* Enable vertical scrolling */
+    text-align: left;
+    padding: 5px;
+    border: 1px solid #ccc;
+    width: 300px;       /* Fixed width to match the controls */
+    margin-left: 0;     /* Align to the left edge */
+}
+
+/* Three.js container styling (do not modify) */
+#three-container {
+    width: 60%;
+    height: 90%;
+    position: fixed;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    overflow: auto;
+    border: 2px solid #ccc;
+    background-color: white;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-in-out;
 }
