@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SafeRoute - Find Your Exit</title>
+  <title>EvacMap - Find Your Exit</title>
   <link rel="stylesheet" href="styles.css">
   <!-- Include the front-end JavaScript with defer so it loads after the HTML -->
   <script src="frontendscripts.js" defer></script>
@@ -36,11 +36,11 @@
       </div>
     </div>
 
-    <!-- Result container: Displays building result and error messages, plus a continue button -->
+    <!-- Result container: Displays building result and error messages -->
     <div id="result-container">
       <p id="building-result"></p>
       <p id="error-message"></p>
-      <button id="continue-button" class="hidden">Continue</button>
+      <button id="continue-button-1" class="hidden">Continue</button>
     </div>
 
     <!-- Optional image container -->
@@ -48,7 +48,7 @@
       <img id="building-image" src="building-placeholder.jpg" alt="Building">
     </div>
 
-    <!-- Dropdowns for later options (if needed) -->
+    <!-- Dropdowns for later options (if needed), plus a continue button -->
     <div id="dropdowns-container">
       <select id="dropdown-disability">
         <option value="" disabled selected>Select an Accessibility Option</option>
@@ -62,6 +62,7 @@
         <option value="Power outage">Power Outage</option>
         <option value="Earthquake">Earthquake</option>
       </select>
+      <button id="continue-button-2" class="hidden">Continue</button>
     </div>
   </main>
 </body>

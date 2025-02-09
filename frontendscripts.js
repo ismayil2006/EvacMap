@@ -2,9 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Utility function to update the building result and show the Continue button
     function displayBuildingResult(result) {
       const buildingResultElement = document.getElementById("building-result");
-      const continueButton = document.getElementById("continue-button");
-      buildingResultElement.innerText = result;
-      continueButton.classList.remove("hidden");
+      const continueButton = document.getElementById("continue-button-1");
+      document.getElementById("continue-button-1").classList.add("show-button");
     }
   
     // --- Detect Building Automatically (Geolocation) ---
@@ -42,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Geolocation is not supported by this browser.");
         document.getElementById("building-result").innerText = "Geolocation is not supported by your browser.";
       }
+    //   document.getElementById("continue-button-1").classList.add("show-button"); // remove
     });
   
     // --- Recognize Building from Manual Input ---
@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error("Error recognizing building:", error);
         document.getElementById("error-message").innerText = "Error recognizing building. Try again.";
       }
+    //   document.getElementById("continue-button-1").classList.add("show-button"); // remove
     });
   
     // --- Fetch Real-Time Emergency Alerts ---
@@ -93,8 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     // Trigger animations when building detection or search is performed
-    document.getElementById("detect-location").addEventListener("click", triggerAnimation);
-    document.getElementById("search-building").addEventListener("click", triggerAnimation);
+    document.getElementById("continue-button-1").addEventListener("click", triggerAnimation);
+    // document.getElementById("search-building").addEventListener("click", triggerAnimation);
   
     function triggerAnimation() {
       // Slide the header image to the left
@@ -106,6 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("search-building").classList.add("hidden-left");
       document.getElementById("address-input").classList.add("hidden-left");
       document.getElementById("fetch-alerts").classList.add("hidden-right");
+      
+      //document.getElementById("continue-button-1").classList.add("show-button"); //remove later
       // Show the image container
       document.getElementById("image-container").classList.add("show-image");
       // Optionally, reveal additional options after a delay
@@ -121,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function checkDropdowns() {
       const dropdown1 = document.getElementById("dropdown-disability").value;
       const dropdown2 = document.getElementById("dropdown-emergencytype").value;
-      const continueButton = document.getElementById("continue-button");
+      const continueButton = document.getElementById("continue-button-2");
       if (dropdown1 && dropdown2) {
         continueButton.classList.add("show-button");
       } else {
