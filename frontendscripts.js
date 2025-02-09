@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     // Trigger animations when building detection or search is performed
     document.getElementById("continue-button-1").addEventListener("click", triggerAnimation);
-    document.getElementById("search-building").addEventListener("click", triggerAnimation);
+    // document.getElementById("search-building").addEventListener("click", triggerAnimation);
   
     function triggerAnimation() {
       // Slide the header image to the left
@@ -148,13 +148,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set up scene, camera, and renderer
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 500000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xffffff, 1);
     // renderer.domElement.style.position = "fixed"; // Fix it in place
     // renderer.domElement.style.top = "0";
-    renderer.domElement.style.left = "0";
+    // renderer.domElement.style.left = "0";
     // // renderer.domElement.style.zIndex = "-1"; // Send it to the background
     // renderer.domElement.style.pointerEvents = "auto";
     document.getElementById("three-container").appendChild(renderer.domElement);
@@ -175,22 +175,82 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
 
     const planes = [];
-    const spacing = 1;
+    const spacing = 50;
 
     imagePaths.forEach((path, index) => {
         const texture = new THREE.TextureLoader().load(path);
         const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true });
-        const geometry = new THREE.PlaneGeometry(5, 5);
+        const geometry = new THREE.PlaneGeometry(567, 1224);
         const plane = new THREE.Mesh(geometry, material);
         plane.position.set(0, -index * spacing, 0);
         plane.rotation.x = Math.PI / 2;
-        plane.rotation.z = -Math.PI / 2;
+        // plane.rotation.z = -Math.PI / 2;
         scene.add(plane);
         planes.push(plane);
     });
 
+    // lines
+    function createLine3D(start, end, radius = 10, color = 0xff0000) {
+        const direction = new THREE.Vector3().subVectors(end, start);
+        const length = direction.length();
+        
+        // Create the cylinder geometry (using a small radius)
+        const geometry = new THREE.CylinderGeometry(radius, radius, length, 8);
+        const material = new THREE.MeshBasicMaterial({ color });
+        const cylinder = new THREE.Mesh(geometry, material);
+        
+        // Position the cylinder at the midpoint
+        const midpoint = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+        cylinder.position.copy(midpoint);
+        
+        // Align the cylinder to the direction of the line
+        const axis = new THREE.Vector3(0, 1, 0); // Default up axis
+        cylinder.quaternion.setFromUnitVectors(axis, direction.clone().normalize());
+        
+        return cylinder;
+    }
+
+    function createSphereAtPoint(point, radius = 5, color = 0xff0000) {
+        // Create sphere geometry
+        const geometry = new THREE.SphereGeometry(radius, 8, 8);
+        const material = new THREE.MeshBasicMaterial({ color });
+        const sphere = new THREE.Mesh(geometry, material);
+        
+        // Position the sphere at the given point
+        sphere.position.copy(point);
+        
+        return sphere;
+    }
+
+    const points = [];
+    var point = new THREE.Vector3( -284, 0, -612 );
+    point.add(new THREE.Vector3( 220, (-spacing)*3, 512 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( -15, (-spacing)*0, -40 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( 15, (-spacing)*1, 3 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( 17, (-spacing)*0, -17 ));
+    points.push( point.clone() );
+    point.add(new THREE.Vector3( -120, (-spacing)*0, -120 ));
+    points.push( point.clone() );
+    // points.push( new THREE.Vector3( 0, -1, 0 ) );
+    // points.push( new THREE.Vector3( 0, -2, 1 ) );
+    // points.push( new THREE.Vector3( 1, -2, 3 ) );
+
+    const sphereEnd = createSphereAtPoint(points[0], 5, 0x007BFF); // Adjust radius and color here
+    scene.add(sphereEnd);
+    for (let i = 0; i < points.length - 1; i++) {
+        const line = createLine3D(points[i], points[i + 1], 5, 0x007BFF); // Adjust radius here
+        scene.add(line);
+
+        const sphereEnd = createSphereAtPoint(points[i + 1], 5, 0x007BFF); // Adjust radius and color here
+        scene.add(sphereEnd);
+    }
+    
+
     // Position the camera
-    camera.position.set(5, 8, 5); // Move the camera up and back
+    camera.position.set(1000, 1224, 1000); // Move the camera up and back
     camera.rotation.x = Math.PI / 1;  // Tilt the camera downwards at an angle
     controls.target.set(0, 0, -(planes.length * spacing) / 2);
 
