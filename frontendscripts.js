@@ -135,5 +135,75 @@ document.addEventListener("DOMContentLoaded", () => {
         continueButton.classList.remove("show-button");
       }
     }
+
+
+
+    // 3D stuff maybe
+
+    // Set up scene, camera, and renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0xffffff, 1);
+    // renderer.domElement.style.position = "fixed"; // Fix it in place
+    // renderer.domElement.style.top = "0";
+    // renderer.domElement.style.left = "0";
+    // // renderer.domElement.style.zIndex = "-1"; // Send it to the background
+    // renderer.domElement.style.pointerEvents = "auto";
+    document.getElementById("three-container").appendChild(renderer.domElement);
+
+    // Add orbit controls for rotation and panning
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = true;
+    controls.rotateSpeed = 0.5;
+    controls.panSpeed = 0.5;
+
+    // Load images as textures and create planes
+    const imagePaths = [
+        'Images/fuqua_layout_slice_0.png', 'Images/fuqua_layout_slice_1.png',
+        'Images/fuqua_layout_slice_2.png', 'Images/fuqua_layout_slice_3.png',
+        'Images/fuqua_layout_slice_4.png', 'Images/fuqua_layout_slice_5.png',
+    ];
+
+    const planes = [];
+    const spacing = 1;
+
+    imagePaths.forEach((path, index) => {
+        const texture = new THREE.TextureLoader().load(path);
+        const material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide, transparent: true });
+        const geometry = new THREE.PlaneGeometry(5, 5);
+        const plane = new THREE.Mesh(geometry, material);
+        plane.position.set(0, 0, -index * spacing);
+        scene.add(plane);
+        planes.push(plane);
+    });
+
+    // Position the camera
+    camera.position.set(0, 0, 2);
+    controls.target.set(4, 4, -(planes.length * spacing) / 2);
+
+    // Handle window resizing
+    window.addEventListener("resize", () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    });
+
+    // Animation loop
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+    animate();
+
+
+
+
+
+    // keep next line
   });
   

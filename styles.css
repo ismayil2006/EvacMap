@@ -201,3 +201,15 @@ body {
   #continue-button-2.show-button {
     display: inline-block;
   }
+
+  #three-container {
+    width: 600px;         /* Width of the container */
+    height: 400px;        /* Height of the container */
+    position: fixed;         /* Fixed positioning relative to the viewport */
+    top: 50%;                /* Center vertically */
+    right: 20px;             /* Move 20px from the right edge */
+    transform: translateY(-50%);
+    overflow: hidden;     /* Hides anything that exceeds the bounds of the container */
+    border: 2px solid #ccc; /* Optional: border for visibility */
+    background-color: white; /* Background for contrast */
+}
