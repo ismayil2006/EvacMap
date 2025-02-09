@@ -1,36 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeRoute - Find Your Exit</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeRoute - Find Your Exit</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- Use the script tag with defer from the feature-ui branch -->
+  <script src="frontendscripts.js" defer></script>
 </head>
 <body>
+  <header>
+    <img src="Images/EvacMapLogo.png" alt="EvacMap Header" class="header-image">
+  </header>
 
-    <header>
-        <img src="Images/EvacMapLogo.png" alt="EvacMap Header" class="header-image">
-    </header>
+  <main class="container">
+    <h1 id="title">Find an Accessible Evacuation Route</h1>
 
-    <main class="container">
-        <h1>Find an Accessible Evacuation Route</h1>
+    <!-- Columns layout from the feature-ui branch -->
+    <div class="columns-wrapper">
+      <!-- Left column: Controls for detecting/searching a building -->
+      <div class="column left-column">
         <button id="detect-location">Detect My Building</button>
+        <p id="paragraph">Or enter your address manually:</p>
+        <div class="search-container">
+          <input type="text" id="address-input" placeholder="Enter address or building name">
+          <button id="search-building">Search</button>
+        </div>
+      </div>
 
-        <p>Or enter your address manually:</p>
-        <input type="text" id="address-input" placeholder="Enter address or building name">
-        <button id="search-building">Search</button>
-
-        <!-- Display results here -->
-        <p id="building-result" style="font-weight: bold; color: #007BFF;"></p>
-        <p id="manual-building-result" style="font-weight: bold; color: #28a745;"></p>
-        <p id="error-message" style="color: red;"></p>
-
-        <!-- Section for emergency alerts -->
-        <h2>Real-Time Emergency Alerts</h2>
+      <!-- Right column: Emergency Alerts -->
+      <div class="column right-column">
         <button id="fetch-alerts">Fetch Alerts</button>
-        <ul id="alerts-list"></ul>
-    </main>
+      </div>
+    </div>
 
-    <script src="frontendscripts.js"></script>
+    <!-- Optional: A placeholder for an image if needed -->
+    <div id="image-container">
+      <img id="building-image" src="building-placeholder.jpg" alt="Building">
+    </div>
+
+    <!-- Dropdowns for additional options -->
+    <div id="dropdowns-container">
+      <select id="dropdown-disability">
+        <option value="" disabled selected>Select an Accessibility Option</option>
+        <option value="Avoid stairs">Avoid Stairs</option>
+        <option value="Least turns">Least Turns</option>
+        <option value="Shortest">Shortest</option>
+      </select>
+      <select id="dropdown-emergencytype">
+        <option value="" disabled selected>Select an Emergency Event</option>
+        <option value="Fire evacuation">Fire Evacuation</option>
+        <option value="Power outage">Power Outage</option>
+        <option value="Earthquake">Earthquake</option>
+      </select>
+      <!-- Continue button -->
+      <button id="continue-button">Continue</button>
+    </div>
+  </main>
 </body>
 </html>
