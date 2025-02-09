@@ -19,11 +19,12 @@ function triggerAnimation() {
     document.querySelector(".header-image").classList.add("slide-left");
 
     // Add hidden class to other elements (title, buttons, input)
-    document.getElementById("title").classList.add("hidden");
-    document.getElementById("paragraph").classList.add("hidden");
-    document.getElementById("detect-location").classList.add("hidden");
-    document.getElementById("search-building").classList.add("hidden");
-    document.getElementById("address-input").classList.add("hidden");
+    document.getElementById("title").classList.add("hidden-left");
+    document.getElementById("paragraph").classList.add("hidden-left");
+    document.getElementById("detect-location").classList.add("hidden-left");
+    document.getElementById("search-building").classList.add("hidden-left");
+    document.getElementById("address-input").classList.add("hidden-left");
+    document.getElementById("fetch-alerts").classList.add("hidden-right");
 
     // Show image container
     document.getElementById("image-container").classList.add("show-image");

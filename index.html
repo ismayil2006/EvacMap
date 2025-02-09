@@ -15,11 +15,23 @@
 
     <main class="container">
         <h1 id="title">Find an Accessible Evacuation Route</h1>
-        <button id="detect-location">Detect My Building</button>
 
-        <p id = "paragraph">Or enter your address manually:</p>
-        <input type="text" id="address-input" placeholder="Enter address or building name">
-        <button id="search-building">Search</button>
+        <div class="columns-wrapper">
+            <!-- left column -->
+            <div class="column left-column">
+                <button id="detect-location">Detect My Building</button>
+                <p id="paragraph">Or enter your address manually:</p>
+                <div class="search-container">
+                    <input type="text" id="address-input" placeholder="Enter address or building name">
+                    <button id="search-building">Search</button>
+                </div>
+            </div>
+
+            <!-- right column -->
+            <div class="column right-column">
+                <button id="fetch-alerts">Fetch Alerts</button>
+            </div>
+        </div>
 
         <div id="image-container">
             <img id="building-image" src="building-placeholder.jpg" alt="Building" />
