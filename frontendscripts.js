@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function displayBuildingResult(result) {
       const buildingResultElement = document.getElementById("building-result");
       const continueButton = document.getElementById("continue-button-1");
-      document.getElementById("continue-button-1").classList.add("show-button");
+      buildingResultElement.innerText = result;
+      continueButton.classList.add("show-button");
     }
   
     // --- Detect Building Automatically (Geolocation) ---
